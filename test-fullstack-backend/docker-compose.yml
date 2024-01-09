@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  php:
+    build:
+      dockerfile: Dockerfile
+    container_name: php-testfullstack
+    volumes:
+      - ./:/var/www/html/
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    ports:
+      - "8080:80"
+      - "443:443"
+    links:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    container_name: php-postgres-testfullstack
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
